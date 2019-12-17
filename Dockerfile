@@ -1,9 +1,9 @@
 # build stage
 FROM golang:alpine AS build
-RUN apk update && apk upgrade && \
-    apk add --no-cache bash git openssh
+ENV GO111MODULE=on
+RUN apk -Uuv add git
 ADD main.go .
-RUN go get k8s.io/client-go@master
+RUN go get k8s.io/client-go/...
 RUN go get -u k8s.io/apimachinery/...
 RUN go build -o ./app
 
